@@ -13,10 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/saludos', function () {
     return view('app');
 });
+
+// Alumnos
+Route::get('/api/alumnos', 'App\Http\Controllers\AlumnoController@index');
+Route::get('/api/alumnos/{dni}', 'App\Http\Controllers\AlumnoController@obtenerAlumnoPorDni');
+Route::post('/api/alumnos/guardar', 'App\Http\Controllers\AlumnoController@guardarAlumno');
+Route::delete('/api/alumnos/eliminar/{dni}', 'App\Http\Controllers\AlumnoController@eliminarAlumnoPorDni');
+
+
+

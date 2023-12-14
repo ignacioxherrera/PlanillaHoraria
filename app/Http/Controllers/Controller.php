@@ -6,6 +6,26 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
+/**
+ * @OA\Info(
+ *     title="Planificacion Horaria",
+ *     version="1.0.0",
+ *     description="Gestion de horarios de clases",
+ *     @OA\Contact(
+ *         email="contacto@tudominio.com"
+ *     ),
+ *     @OA\License(
+ *         name="Licencia",
+ *         url="https://www.terciarioUrquiza.com.ar/planificacionHoraria"
+ *     )
+ * )
+ *
+ * @OA\Get(
+ *     path="/",
+ *     description="Pagina de inicio",
+ *     @OA\Response(response="default", description="Bienvenido a la API de Planificacion Horaria")
+ * )
+ */
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;

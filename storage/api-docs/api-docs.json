@@ -1,0 +1,235 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Planificacion Horaria",
+        "description": "Gestion de horarios de clases",
+        "contact": {
+            "email": "contacto@tudominio.com"
+        },
+        "license": {
+            "name": "Licencia",
+            "url": "https://www.terciarioUrquiza.com.ar/planificacionHoraria"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/alumnos": {
+            "get": {
+                "tags": [
+                    "Alumno"
+                ],
+                "summary": "Obtener lista de alumnos",
+                "description": "Devuelve la lista de alumnos",
+                "operationId": "getAlumnosList",
+                "responses": {
+                    "200": {
+                        "description": "Lista de alumnos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Alumno"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/alumnos/{dni}": {
+            "get": {
+                "tags": [
+                    "Alumno"
+                ],
+                "summary": "Obtener alumno por dni",
+                "description": "Devuelve un alumno",
+                "operationId": "getAlumnoByDni",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del alumno",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Alumno",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Alumno"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Alumno no encontrado"
+                    },
+                    "500": {
+                        "description": "Error al obtener el alumno"
+                    }
+                }
+            }
+        },
+        "/api/alumnos/guardar": {
+            "post": {
+                "tags": [
+                    "Alumno"
+                ],
+                "summary": "Guardar nuevo alumno",
+                "description": "Guardar nuevo alumno",
+                "operationId": "guardarAlumno",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AlumnoData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Alumno guardado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Alumno"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/alumnos/eliminar/{dni}": {
+            "delete": {
+                "tags": [
+                    "Alumno"
+                ],
+                "summary": "Eliminar alumno por dni",
+                "description": "Eliminar alumno por dni",
+                "operationId": "eliminarAlumnoPorDni",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del alumno",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Alumno eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Alumno no encontrado"
+                    },
+                    "500": {
+                        "description": "Error al eliminar el alumno"
+                    }
+                }
+            }
+        },
+        "/": {
+            "get": {
+                "description": "Pagina de inicio",
+                "operationId": "58658e34a5c8bd71c4a0afed6de10d20",
+                "responses": {
+                    "default": {
+                        "description": "Bienvenido a la API de Planificacion Horaria"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AlumnoData": {
+                "title": "AlumnoData",
+                "description": "Esquema del objeto AlumnoData",
+                "properties": {
+                    "dni": {
+                        "description": "DNI del alumno",
+                        "type": "string"
+                    },
+                    "nombre": {
+                        "description": "Nombre del alumno",
+                        "type": "string"
+                    },
+                    "apellido": {
+                        "description": "Apellido del alumno",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email del alumno",
+                        "type": "string"
+                    },
+                    "contrasenia": {
+                        "description": "Contraseña del alumno",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Alumno": {
+                "title": "Alumno",
+                "description": "Esquema del objeto Alumno",
+                "properties": {
+                    "dni": {
+                        "description": "DNI del alumno",
+                        "type": "string"
+                    },
+                    "nombre": {
+                        "description": "Nombre del alumno",
+                        "type": "string"
+                    },
+                    "apellido": {
+                        "description": "Apellido del alumno",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email del alumno",
+                        "type": "string"
+                    },
+                    "contrasenia": {
+                        "description": "Contraseña del alumno",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Alumno_comision": {
+                "title": "Alumno_comision",
+                "description": "Esquema del objeto Alumno_comision",
+                "properties": {
+                    "id": {
+                        "description": "ID del alumno_comision",
+                        "type": "integer"
+                    },
+                    "id_alumno": {
+                        "description": "ID del alumno",
+                        "type": "integer"
+                    },
+                    "id_comision": {
+                        "description": "ID de la comision",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
