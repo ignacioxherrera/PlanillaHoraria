@@ -23,5 +23,9 @@ Route::get('/api/alumnos/{dni}', 'App\Http\Controllers\AlumnoController@obtenerA
 Route::post('/api/alumnos/guardar', 'App\Http\Controllers\AlumnoController@guardarAlumno');
 Route::delete('/api/alumnos/eliminar/{dni}', 'App\Http\Controllers\AlumnoController@eliminarAlumnoPorDni');
 
-
+// Aulas
+Route::get('/api/aulas', 'App\Http\Controllers\AulaController@index');
+Route::get('/api/aulas/{id}', 'App\Http\Controllers\AulaController@obtenerAulaPorId');
+Route::post('/api/aulas/guardar', 'App\Http\Controllers\AulaController@guardarAula');
+Route::delete('/api/aulas/eliminar/{id}', 'App\Http\Controllers\AulaController@eliminarAulaPorId');
 

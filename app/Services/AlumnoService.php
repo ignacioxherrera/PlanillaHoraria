@@ -40,16 +40,6 @@ class AlumnoService implements AlumnoRepository
             return response()->json(['error' => 'Hubo un error al obtener el alumno'], 500);
         }
     }
-    /*
-    {
-        try {
-            $alumno = Alumno::find($);
-            return response()->json($alumno, 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Hubo un error al obtener el alumno'], 500);
-        }
-    }
-*/
 
     public function guardarAlumno($alumnoData)
     {

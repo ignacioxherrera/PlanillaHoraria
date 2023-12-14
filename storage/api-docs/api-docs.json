@@ -143,6 +143,140 @@
                 }
             }
         },
+        "/api/aulas": {
+            "get": {
+                "tags": [
+                    "Aula"
+                ],
+                "summary": "Obtener lista de aulas",
+                "description": "Devuelve la lista de aulas",
+                "operationId": "getAulasList",
+                "responses": {
+                    "200": {
+                        "description": "Lista de aulas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Aula"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/aulas/{id}": {
+            "get": {
+                "tags": [
+                    "Aula"
+                ],
+                "summary": "Obtener aula por id",
+                "description": "Devuelve un aula",
+                "operationId": "getAulaById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del aula",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Aula",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Aula"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Aula no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/aulas/guardar": {
+            "post": {
+                "tags": [
+                    "Aula"
+                ],
+                "summary": "Guardar aula",
+                "description": "Guardar un aula",
+                "operationId": "saveAula",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AulaData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Aula creado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Aula"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al guardar el aula"
+                    }
+                }
+            }
+        },
+        "/api/aulas/eliminar/{id}": {
+            "delete": {
+                "tags": [
+                    "Aula"
+                ],
+                "summary": "Eliminar aula",
+                "description": "Eliminar un aula",
+                "operationId": "deleteAula",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del aula",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Aula eliminado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Aula"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Aula no encontrada"
+                    }
+                }
+            }
+        },
         "/": {
             "get": {
                 "description": "Pagina de inicio",
@@ -184,6 +318,21 @@
                 },
                 "type": "object"
             },
+            "AulaData": {
+                "title": "AulaData",
+                "description": "Esquema del objeto AulaData",
+                "properties": {
+                    "nombre": {
+                        "description": "Nombre del aula",
+                        "type": "string"
+                    },
+                    "laboratorio": {
+                        "description": "Laboratorio del aula",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
             "Alumno": {
                 "title": "Alumno",
                 "description": "Esquema del objeto Alumno",
@@ -211,21 +360,21 @@
                 },
                 "type": "object"
             },
-            "Alumno_comision": {
-                "title": "Alumno_comision",
-                "description": "Esquema del objeto Alumno_comision",
+            "Aula": {
+                "title": "Aula",
+                "description": "Esquema del objeto Aula",
                 "properties": {
                     "id": {
-                        "description": "ID del alumno_comision",
+                        "description": "Id del aula",
                         "type": "integer"
                     },
-                    "id_alumno": {
-                        "description": "ID del alumno",
-                        "type": "integer"
+                    "nombre": {
+                        "description": "Nombre del aula",
+                        "type": "string"
                     },
-                    "id_comision": {
-                        "description": "ID de la comision",
-                        "type": "integer"
+                    "laboratorio": {
+                        "description": "Laboratorio del aula",
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
