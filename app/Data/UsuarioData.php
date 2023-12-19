@@ -9,9 +9,9 @@ use Dflydev\DotAccessData\Data;
 
 /**
  * @OA\Schema(
- *     schema="AlumnoData",
- *     title="AlumnoData",
- *     description="Esquema del objeto AlumnoData",
+ *     schema="UsuarioData",
+ *     title="UsuarioData",
+ *     description="Esquema del objeto UsuarioData",
  *     @OA\Property(
  *     property="dni",
  *     type="string",
@@ -36,17 +36,24 @@ use Dflydev\DotAccessData\Data;
  *     property="contrasenia",
  *     type="string",
  *     description="Contraseña del alumno"
- * )
+ * ),
+ *     @OA\Property(
+ *     property="tipo",
+ *     type="enum",
+ *     description="Tipo de usuario",
+ *     enum={"alumno", "docente", "admin"}
+ *     )
  * )
  */
-class AlumnoData extends Data {
+class UsuarioData extends Data {
 
     public function __construct(
         public $dni,
         public $nombre,
         public $apellido,
         public $email,
-        public $contrasenia
+        public $contrasenia,
+        public $tipo
     ){
 
     }

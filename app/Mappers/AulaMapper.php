@@ -11,7 +11,7 @@ class AulaMapper
     public static function toAula(AulaData $aulaData)
     {
         return new Aula([
-            'nombre' => $aulaData->nombre,
+            'nro' => $aulaData->nro,
             'laboratorio' => $aulaData->laboratorio,
             'fecha_creacion' => Carbon::now(),
             'fecha_modificacion' => Carbon::now()
@@ -21,7 +21,7 @@ class AulaMapper
     public static function toAulaData(Aula $aula)
     {
         return new AulaData(
-            $aula->nombre,
+            $aula->nro,
             $aula->laboratorio
         );
     }

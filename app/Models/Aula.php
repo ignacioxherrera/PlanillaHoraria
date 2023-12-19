@@ -11,14 +11,9 @@ use Illuminate\Database\Eloquent\Model;
  *    title="Aula",
  *     description="Esquema del objeto Aula",
  *     @OA\Property(
- *     property="id",
+ *     property="nro",
  *     type="integer",
- *     description="Id del aula"
- * ),
- *     @OA\Property(
- *     property="nombre",
- *     type="string",
- *     description="Nombre del aula"
+ *     description="Número del aula"
  * ),
  *     @OA\Property(
  *     property="laboratorio",
@@ -32,12 +27,15 @@ class Aula extends Model
     use HasFactory;
 
     protected $table = 'aulas';
+
+    protected $primaryKey = 'nro';
+    public $incrementing = false;
     const CREATED_AT = 'fecha_creacion';
     const UPDATED_AT = 'fecha_modificacion';
 
     public $timestamps = true;
 
-    protected $fillable = ['id', 'nombre', 'laboratorio', 'fecha_creacion', 'fecha_modificacion'];
+    protected $fillable = ['nro', 'laboratorio', 'fecha_creacion', 'fecha_modificacion'];
 
 
 }

@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @OA\Schema(
- *     schema="Alumno",
- *     title="Alumno",
- *     description="Esquema del objeto Alumno",
+ *     schema="Usuario",
+ *     title="Usuario",
+ *     description="Esquema del objeto Usuario",
  *     @OA\Property(
  *     property="dni",
  *     type="string",
@@ -34,14 +34,30 @@ use Illuminate\Database\Eloquent\Model;
  *     property="contrasenia",
  *     type="string",
  *     description="Contraseña del alumno"
+ * ),
+ *     @OA\Property(
+ *     property="tipo",
+ *     type="enum",
+ *     description="Tipo de usuario",
+ *     enum={"alumno", "docente", "admin"}
+ *     ),
+ *     @OA\Property(
+ *     property="fecha_creacion",
+ *     type="datetime",
+ *     description="Fecha de creacion del usuario"
+ * ),
+ *     @OA\Property(
+ *     property="fecha_modificacion",
+ *     type="datetime",
+ *     description="Fecha de modificacion del usuario"
  * )
  * )
  */
-class Alumno extends Model
+class Usuario extends Model
 {
     use HasFactory;
 
-    protected $table = 'Alumnos';
+    protected $table = 'Usuarios';
 
     protected $primaryKey = 'dni';
     public $incrementing = false;
@@ -51,7 +67,7 @@ class Alumno extends Model
 
     public $timestamps = true;
 
-    protected $fillable = ['dni', 'nombre', 'apellido', 'email', 'contrasenia', 'fecha_creacion', 'fecha_modificacion'];
+    protected $fillable = ['dni', 'nombre', 'apellido', 'email', 'contrasenia', 'tipo', 'fecha_creacion', 'fecha_modificacion'];
 
     protected $hidden = ['contrasenia'];
 

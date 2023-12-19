@@ -10,9 +10,9 @@ use Dflydev\DotAccessData\Data;
  *     title="AulaData",
  *     description="Esquema del objeto AulaData",
  *     @OA\Property(
- *     property="nombre",
- *     type="string",
- *     description="Nombre del aula"
+ *     property="nro",
+ *     type="integer",
+ *     description="Número del aula"
  * ),
  *     @OA\Property(
  *     property="laboratorio",
@@ -24,7 +24,7 @@ use Dflydev\DotAccessData\Data;
 class AulaData extends Data
 {
     public function __construct(
-        public $nombre,
+        public $nro,
         public $laboratorio
     ){
 

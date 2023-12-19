@@ -2,47 +2,48 @@ CREATE DATABASE urquiza;
 
 # CREACION DE TABLAS
 
-CREATE TABLE Alumnos (
-    dni INT PRIMARY KEY,
+CREATE TABLE Usuarios (
+    dni VARCHAR(255) PRIMARY KEY,
     nombre VARCHAR(255),
     apellido VARCHAR(255),
     email VARCHAR(255),
     contrasenia VARCHAR(255),
-    creacion DATETIME,
-    actualizacion DATETIME
+    tipo ENUM('alumno', 'docente', 'admin'),
+    fecha_creacion DATETIME,
+    fecha_modificacion DATETIME
 );
 
 CREATE TABLE Comisiones (
     id INT AUTO_INCREMENT PRIMARY KEY,
     anio INT,
     division INT,
-    carrera ENUM('DS', 'ITI', 'AF')
+    carrera ENUM('DS', 'ITI', 'AF'),
+    fecha_creacion DATETIME,
+    fecha_modificacion DATETIME
 );
 
 CREATE TABLE Aulas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255),
-    laboratorio BOOL
+    nro INT PRIMARY KEY,
+    laboratorio BOOL,
+    fecha_creacion DATETIME,
+    fecha_modificacion DATETIME
 );
 
-CREATE TABLE Docentes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255),
-    apellido VARCHAR(255),
-    email VARCHAR(255),
-    contrasenia VARCHAR(255)
-);
 
 CREATE TABLE Horarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     inicio TIME,
     fin TIME,
-    dia ENUM('L', 'MA', 'MI', 'J', 'V')
+    dia ENUM('L', 'MA', 'MI', 'J', 'V'),
+    fecha_creacion DATETIME,
+    fecha_modificacion DATETIME
 );
 
 CREATE TABLE Materias (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255)
+    nombre VARCHAR(255),
+    fecha_creacion DATETIME,
+    fecha_modificacion DATETIME
 );
 # RELACIONES ENTRE TABLAS
 
@@ -59,7 +60,7 @@ CREATE TABLE Cambios_docente (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_docente_anter INT,
     id_docente_nuevo INT,
-    cambio DATE,
+    fecha_modificacion DATE,
     FOREIGN KEY (id_docente_anter) REFERENCES Docentes(id),
     FOREIGN KEY (id_docente_nuevo) REFERENCES Docentes(id),
 	UNIQUE KEY unique_docentes (id_docente_anter, id_docente_nuevo)
@@ -174,6 +175,17 @@ INSERT INTO Comisiones_materia (id_comision, id_materia) VALUES
 (3, 2),
 (6, 2),
 (7, 1);
+
+
+
+# Insertar
+
+INSERT INTO Aulas (nombre, laboratorio, fecha_creacion, fecha_modificacion) VALUES
+('Aula 101', 1, '2023-12-01 09:00:00', '2023-12-01 09:00:00'),
+('Aula 102', 0, '2023-12-02 10:30:00', '2023-12-02 10:30:00'),
+('Aula 103', 1, '2023-12-03 11:45:00', '2023-12-03 11:45:00'),
+('Aula 104', 0, '2023-12-04 13:15:00', '2023-12-04 13:15:00'),
+('Aula 105', 1, '2023-12-05 14:30:00', '2023-12-05 14:30:00');
 
 
 

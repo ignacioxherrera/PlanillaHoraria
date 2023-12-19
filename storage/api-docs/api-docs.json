@@ -13,136 +13,6 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/alumnos": {
-            "get": {
-                "tags": [
-                    "Alumno"
-                ],
-                "summary": "Obtener lista de alumnos",
-                "description": "Devuelve la lista de alumnos",
-                "operationId": "getAlumnosList",
-                "responses": {
-                    "200": {
-                        "description": "Lista de alumnos",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Alumno"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/alumnos/{dni}": {
-            "get": {
-                "tags": [
-                    "Alumno"
-                ],
-                "summary": "Obtener alumno por dni",
-                "description": "Devuelve un alumno",
-                "operationId": "getAlumnoByDni",
-                "parameters": [
-                    {
-                        "name": "dni",
-                        "in": "path",
-                        "description": "DNI del alumno",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Alumno",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Alumno"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Alumno no encontrado"
-                    },
-                    "500": {
-                        "description": "Error al obtener el alumno"
-                    }
-                }
-            }
-        },
-        "/api/alumnos/guardar": {
-            "post": {
-                "tags": [
-                    "Alumno"
-                ],
-                "summary": "Guardar nuevo alumno",
-                "description": "Guardar nuevo alumno",
-                "operationId": "guardarAlumno",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AlumnoData"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Alumno guardado correctamente",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Alumno"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/alumnos/eliminar/{dni}": {
-            "delete": {
-                "tags": [
-                    "Alumno"
-                ],
-                "summary": "Eliminar alumno por dni",
-                "description": "Eliminar alumno por dni",
-                "operationId": "eliminarAlumnoPorDni",
-                "parameters": [
-                    {
-                        "name": "dni",
-                        "in": "path",
-                        "description": "DNI del alumno",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Alumno eliminado correctamente"
-                    },
-                    "404": {
-                        "description": "Alumno no encontrado"
-                    },
-                    "500": {
-                        "description": "Error al eliminar el alumno"
-                    }
-                }
-            }
-        },
         "/api/aulas": {
             "get": {
                 "tags": [
@@ -168,19 +38,19 @@
                 }
             }
         },
-        "/api/aulas/{id}": {
+        "/api/aulas/{nro}": {
             "get": {
                 "tags": [
                     "Aula"
                 ],
-                "summary": "Obtener aula por id",
+                "summary": "Obtener aula por nro",
                 "description": "Devuelve un aula",
-                "operationId": "getAulaById",
+                "operationId": "getAulaByNro",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "nro",
                         "in": "path",
-                        "description": "Id del aula",
+                        "description": "Número del aula",
                         "required": true,
                         "schema": {
                             "type": "integer",
@@ -240,19 +110,19 @@
                 }
             }
         },
-        "/api/aulas/eliminar/{id}": {
+        "/api/aulas/eliminar/{nro}": {
             "delete": {
                 "tags": [
                     "Aula"
                 ],
-                "summary": "Eliminar aula",
-                "description": "Eliminar un aula",
+                "summary": "Eliminar aula por nro",
+                "description": "Eliminar un aula por nro",
                 "operationId": "deleteAula",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "nro",
                         "in": "path",
-                        "description": "Id del aula",
+                        "description": "Número del aula",
                         "required": true,
                         "schema": {
                             "type": "integer",
@@ -277,13 +147,174 @@
                 }
             }
         },
-        "/": {
+        "/api/usuarios": {
             "get": {
-                "description": "Pagina de inicio",
-                "operationId": "58658e34a5c8bd71c4a0afed6de10d20",
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Obtener todos los usuarios",
+                "description": "Devuelve todos los usuarios",
+                "operationId": "getUsuarios",
                 "responses": {
-                    "default": {
-                        "description": "Bienvenido a la API de Planificacion Horaria"
+                    "200": {
+                        "description": "Usuarios",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Usuario"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al obtener los usuarios"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/{dni}": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Obtener usuario por dni",
+                "description": "Devuelve un usuario",
+                "operationId": "getUsuarioPorDni",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Usuario"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    },
+                    "500": {
+                        "description": "Error al obtener el usuario"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/guardar": {
+            "post": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Guardar usuario",
+                "description": "Guardar un usuario",
+                "operationId": "guardarUsuario",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UsuarioData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario guardado correctamente"
+                    },
+                    "500": {
+                        "description": "Error al guardar el usuario"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/actualizar/{dni}": {
+            "put": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Actualizar usuario por dni",
+                "description": "Actualizar usuario por dni",
+                "operationId": "actualizarUsuarioPorDni",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UsuarioData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado correctamente"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    },
+                    "500": {
+                        "description": "Error al actualizar el usuario"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/eliminar/{dni}": {
+            "delete": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Eliminar usuario por dni",
+                "description": "Eliminar usuario por dni",
+                "operationId": "eliminarUsuarioPorDni",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    },
+                    "500": {
+                        "description": "Error al eliminar el usuario"
                     }
                 }
             }
@@ -291,40 +322,13 @@
     },
     "components": {
         "schemas": {
-            "AlumnoData": {
-                "title": "AlumnoData",
-                "description": "Esquema del objeto AlumnoData",
-                "properties": {
-                    "dni": {
-                        "description": "DNI del alumno",
-                        "type": "string"
-                    },
-                    "nombre": {
-                        "description": "Nombre del alumno",
-                        "type": "string"
-                    },
-                    "apellido": {
-                        "description": "Apellido del alumno",
-                        "type": "string"
-                    },
-                    "email": {
-                        "description": "Email del alumno",
-                        "type": "string"
-                    },
-                    "contrasenia": {
-                        "description": "Contraseña del alumno",
-                        "type": "string"
-                    }
-                },
-                "type": "object"
-            },
             "AulaData": {
                 "title": "AulaData",
                 "description": "Esquema del objeto AulaData",
                 "properties": {
-                    "nombre": {
-                        "description": "Nombre del aula",
-                        "type": "string"
+                    "nro": {
+                        "description": "Número del aula",
+                        "type": "integer"
                     },
                     "laboratorio": {
                         "description": "Laboratorio del aula",
@@ -333,9 +337,9 @@
                 },
                 "type": "object"
             },
-            "Alumno": {
-                "title": "Alumno",
-                "description": "Esquema del objeto Alumno",
+            "UsuarioData": {
+                "title": "UsuarioData",
+                "description": "Esquema del objeto UsuarioData",
                 "properties": {
                     "dni": {
                         "description": "DNI del alumno",
@@ -356,6 +360,15 @@
                     "contrasenia": {
                         "description": "Contraseña del alumno",
                         "type": "string"
+                    },
+                    "tipo": {
+                        "description": "Tipo de usuario",
+                        "type": "enum",
+                        "enum": [
+                            "alumno",
+                            "docente",
+                            "admin"
+                        ]
                     }
                 },
                 "type": "object"
@@ -364,17 +377,59 @@
                 "title": "Aula",
                 "description": "Esquema del objeto Aula",
                 "properties": {
-                    "id": {
-                        "description": "Id del aula",
+                    "nro": {
+                        "description": "Número del aula",
                         "type": "integer"
-                    },
-                    "nombre": {
-                        "description": "Nombre del aula",
-                        "type": "string"
                     },
                     "laboratorio": {
                         "description": "Laboratorio del aula",
                         "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "Usuario": {
+                "title": "Usuario",
+                "description": "Esquema del objeto Usuario",
+                "properties": {
+                    "dni": {
+                        "description": "DNI del alumno",
+                        "type": "string"
+                    },
+                    "nombre": {
+                        "description": "Nombre del alumno",
+                        "type": "string"
+                    },
+                    "apellido": {
+                        "description": "Apellido del alumno",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email del alumno",
+                        "type": "string"
+                    },
+                    "contrasenia": {
+                        "description": "Contraseña del alumno",
+                        "type": "string"
+                    },
+                    "tipo": {
+                        "description": "Tipo de usuario",
+                        "type": "enum",
+                        "enum": [
+                            "alumno",
+                            "docente",
+                            "admin"
+                        ]
+                    },
+                    "fecha_creacion": {
+                        "description": "Fecha de creacion del usuario",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "fecha_modificacion": {
+                        "description": "Fecha de modificacion del usuario",
+                        "type": "string",
+                        "format": "date-time"
                     }
                 },
                 "type": "object"

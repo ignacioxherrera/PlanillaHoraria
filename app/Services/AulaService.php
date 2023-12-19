@@ -26,10 +26,10 @@ private $aulaMapper;
         }
     }
 
-    public function obtenerAulaPorId($id)
+    public function obtenerAulaPorId($nro)
     {
         try {
-            $aula = Aula::find($id);
+            $aula = Aula::find($nro);
             if ($aula) {
                 return response()->json($aula, 200);
             } else {
@@ -40,23 +40,23 @@ private $aulaMapper;
         }
     }
 
-    public function guardarAula($aula)
+    public function guardarAula($aulaData)
     {
         try {
-            $aula = $this->aulaMapper->toAula(new AulaData($aula->nombre, $aula->laboratorio));
+            $aula = $this->aulaMapper->toAula($aulaData);
             $aula->save();
             return response()->json($aula, 201);
         } catch (\Exception $e) {
-            \Log::error('Error al guardar el alumno: ' . $e->getMessage());
+            \Log::error('Error al guardar el aula: ' . $e->getMessage());
 
             return response()->json(['error' => 'Hubo un error al guardar el aula'], 500);
         }
     }
 
-    public function eliminarAulaPorId($id)
+    public function eliminarAulaPorId($nro)
     {
         try {
-            $aula = Aula::find($id);
+            $aula = Aula::find($nro);
             if ($aula) {
                 $aula->delete();
                 return response()->json(['success' => 'Se eliminó el aula'], 200);

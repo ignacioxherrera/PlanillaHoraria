@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\AulaService;
+use App\Data\AulaData;
 
 class AulaController extends Controller
 {
@@ -39,15 +40,15 @@ class AulaController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/api/aulas/{id}",
-     *      summary="Obtener aula por id",
+     *      path="/api/aulas/{nro}",
+     *      summary="Obtener aula por nro",
      *      description="Devuelve un aula",
-     *     operationId="getAulaById",
+     *     operationId="getAulaByNro",
      *      tags={"Aula"},
      *      @OA\Parameter(
-     *          name="id",
+     *          name="nro",
      *          in="path",
-     *          description="Id del aula",
+     *          description="Número del aula",
      *          required=true,
      *          @OA\Schema(
      *          type="integer",
@@ -65,9 +66,10 @@ class AulaController extends Controller
      *      )
      * )
      */
-    public function obtenerAulaPorId($id){
-        return $this->aulaService->obtenerAulaPorId($id);
+    public function obtenerAulaPorId($nro){
+        return $this->aulaService->obtenerAulaPorId($nro);
     }
+
 
     /**
      * @OA\Post(
@@ -93,24 +95,29 @@ class AulaController extends Controller
      */
     public function guardarAula(Request $request)
     {
-        return $this->aulaService->guardarAula($request->json()->all());
+        $aulaData = new AulaData(
+            $request->nro,
+            $request->laboratorio
+        );
+        return $this->aulaService->guardarAula($aulaData);
     }
+
 
     /**
      * @OA\Delete(
-     *      path="/api/aulas/eliminar/{id}",
-     *      summary="Eliminar aula",
-     *      description="Eliminar un aula",
+     *      path="/api/aulas/eliminar/{nro}",
+     *      summary="Eliminar aula por nro",
+     *      description="Eliminar un aula por nro",
      *     operationId="deleteAula",
      *      tags={"Aula"},
      *      @OA\Parameter(
-     *          name="id",
+     *          name="nro",
      *          in="path",
-     *          description="Id del aula",
+     *          description="Número del aula",
      *          required=true,
      *          @OA\Schema(
-     *          type="integer",
-     *          format="int64"
+     *              type="integer",
+     *              format="int64"
      *          )
      *      ),
      *      @OA\Response(
@@ -124,8 +131,8 @@ class AulaController extends Controller
      *      )
      * )
      */
-    public function eliminarAulaPorId($id)
+    public function eliminarAulaPorId($nro)
     {
-        return $this->aulaService->eliminarAulaPorId($id);
+        return $this->aulaService->eliminarAulaPorId($nro);
     }
 }

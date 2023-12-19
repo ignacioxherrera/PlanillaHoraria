@@ -5,7 +5,7 @@ namespace App\Repositories;
 interface AulaRepository
 {
     public function obtenerTodasAulas();
-    public function obtenerAulaPorId($id);
+    public function obtenerAulaPorId($nro);
     public function guardarAula($aula);
-    public function eliminarAulaPorId($id);
+    public function eliminarAulaPorId($nro);
 }

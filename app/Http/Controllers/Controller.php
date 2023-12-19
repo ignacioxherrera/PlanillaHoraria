@@ -19,12 +19,6 @@ use Illuminate\Routing\Controller as BaseController;
  *         url="https://www.terciarioUrquiza.com.ar/planificacionHoraria"
  *     )
  * )
- *
- * @OA\Get(
- *     path="/",
- *     description="Pagina de inicio",
- *     @OA\Response(response="default", description="Bienvenido a la API de Planificacion Horaria")
- * )
  */
 class Controller extends BaseController
 {
