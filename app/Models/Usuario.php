@@ -11,46 +11,46 @@ use Illuminate\Database\Eloquent\Model;
  *     title="Usuario",
  *     description="Esquema del objeto Usuario",
  *     @OA\Property(
- *     property="dni",
- *     type="string",
- *     description="DNI del alumno"
- * ),
- *     @OA\Property(
- *     property="nombre",
- *     type="string",
- *     description="Nombre del alumno"
- * ),
- *     @OA\Property(
- *     property="apellido",
- *     type="string",
- *     description="Apellido del alumno"
- * ),
- *     @OA\Property(
- *     property="email",
- *     type="string",
- *     description="Email del alumno"
- * ),
- *     @OA\Property(
- *     property="contrasenia",
- *     type="string",
- *     description="Contraseña del alumno"
- * ),
- *     @OA\Property(
- *     property="tipo",
- *     type="enum",
- *     description="Tipo de usuario",
- *     enum={"alumno", "docente", "admin"}
+ *          property="dni",
+ *          type="string",
+ *          description="DNI del alumno"
  *     ),
  *     @OA\Property(
- *     property="fecha_creacion",
- *     type="datetime",
- *     description="Fecha de creacion del usuario"
- * ),
+ *          property="nombre",
+ *          type="string",
+ *          description="Nombre del alumno"
+ *     ),
  *     @OA\Property(
- *     property="fecha_modificacion",
- *     type="datetime",
- *     description="Fecha de modificacion del usuario"
- * )
+ *          property="apellido",
+ *          type="string",
+ *          description="Apellido del alumno"
+ *     ),
+ *     @OA\Property(
+ *          property="email",
+ *          type="string",
+ *          description="Email del alumno"
+ *     ),
+ *     @OA\Property(
+ *          property="contrasenia",
+ *          type="string",
+ *          description="Contraseña del alumno"
+ *     ),
+ *     @OA\Property(
+ *          property="tipo",
+ *          type="enum",
+ *          description="Tipo de usuario",
+ *          enum={"alumno", "docente", "admin", "visitante"}
+ *     ),
+ *     @OA\Property(
+ *          property="fecha_creacion",
+ *          type="datetime",
+ *          description="Fecha de creacion del usuario"
+ *     ),
+ *     @OA\Property(
+ *          property="fecha_modificacion",
+ *          type="datetime",
+ *          description="Fecha de modificacion del usuario"
+ *     )
  * )
  */
 class Usuario extends Model

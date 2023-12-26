@@ -1,5 +1,7 @@
 CREATE DATABASE urquiza;
 
+SET time_zone = 'America/Argentina/Buenos_Aires';
+
 # CREACION DE TABLAS
 
 CREATE TABLE Usuarios (

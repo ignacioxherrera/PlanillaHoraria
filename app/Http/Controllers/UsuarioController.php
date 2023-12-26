@@ -140,7 +140,120 @@ class UsuarioController extends Controller
      * )
      */
     public function update(Request $request, $dni){
-        return $this->usuarioService->actualizarUsuario($dni, $request);
+        return $this->usuarioService->actualizarUsuario($request, $dni);
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/api/usuarios/actualizar/datos/{dni}",
+     *     summary="Actualizar datos del usuario por dni",
+     *     description="Actualizar datos del usuario por dni",
+     *     operationId="actualizarDatosUsuarioPorDni",
+     *     tags={"Usuario"},
+     *     @OA\Parameter(
+     *          name="dni",
+     *          in="path",
+     *          description="DNI del usuario",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string",
+     *              format="int64"
+     *          )
+     *     ),
+     *     @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(
+     *                  property="dni",
+     *                  type="string",
+     *                  description="DNI del alumno"
+     *              ),
+     *              @OA\Property(
+     *                  property="nombre",
+     *                  type="string",
+     *                  description="Nombre del alumno"
+     *              ),
+     *              @OA\Property(
+     *                  property="apellido",
+     *                  type="string",
+     *                  description="Apellido del alumno"
+     *              ),
+     *              @OA\Property(
+     *                  property="email",
+     *                  type="string",
+     *                  description="Email del alumno"
+     *              ),
+     *              @OA\Property(
+     *                  property="tipo",
+     *                  type="enum",
+     *                  description="Tipo de usuario",
+     *                  enum={"alumno", "docente", "admin", "visitante"}
+     *              )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Usuario actualizado correctamente"
+     *     ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Usuario no encontrado"
+     *     ),
+     *     @OA\Response(
+     *          response=500,
+     *          description="Error al actualizar el usuario"
+     *     )
+     * )
+     */
+    public function updateDatos(Request $request, $dni){
+        return $this->usuarioService->actualizarUsuario($request, $dni, true);
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/api/usuarios/actualizar/password/{dni}",
+     *     summary="Actualizar contraseña del usuario por dni",
+     *     description="Actualizar contraseña del usuario por dni",
+     *     operationId="actualizarPasswordUsuarioPorDni",
+     *     tags={"Usuario"},
+     *     @OA\Parameter(
+     *          name="dni",
+     *          in="path",
+     *          description="DNI del usuario",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string",
+     *              format="int64"
+     *          )
+     *     ),
+     *     @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(
+     *                  property="contrasenia",
+     *                  type="string",
+     *                  description="Contraseña del alumno"
+     *              )
+     *          )
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Usuario actualizado correctamente"
+     *     ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Usuario no encontrado"
+     *     ),
+     *     @OA\Response(
+     *          response=500,
+     *          description="Error al actualizar el usuario"
+     *     )
+     * )
+     */
+    public function updatePassword(Request $request, $dni){
+        return $this->usuarioService->actualizarContrasenia($request, $dni);
     }
 
     /**

@@ -286,6 +286,126 @@
                 }
             }
         },
+        "/api/usuarios/actualizar/datos/{dni}": {
+            "put": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Actualizar datos del usuario por dni",
+                "description": "Actualizar datos del usuario por dni",
+                "operationId": "actualizarDatosUsuarioPorDni",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "dni": {
+                                        "description": "DNI del alumno",
+                                        "type": "string"
+                                    },
+                                    "nombre": {
+                                        "description": "Nombre del alumno",
+                                        "type": "string"
+                                    },
+                                    "apellido": {
+                                        "description": "Apellido del alumno",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Email del alumno",
+                                        "type": "string"
+                                    },
+                                    "tipo": {
+                                        "description": "Tipo de usuario",
+                                        "type": "enum",
+                                        "enum": [
+                                            "alumno",
+                                            "docente",
+                                            "admin",
+                                            "visitante"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado correctamente"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    },
+                    "500": {
+                        "description": "Error al actualizar el usuario"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/actualizar/password/{dni}": {
+            "put": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Actualizar contraseña del usuario por dni",
+                "description": "Actualizar contraseña del usuario por dni",
+                "operationId": "actualizarPasswordUsuarioPorDni",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "contrasenia": {
+                                        "description": "Contraseña del alumno",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado correctamente"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    },
+                    "500": {
+                        "description": "Error al actualizar el usuario"
+                    }
+                }
+            }
+        },
         "/api/usuarios/eliminar/{dni}": {
             "delete": {
                 "tags": [
@@ -343,23 +463,28 @@
                 "properties": {
                     "dni": {
                         "description": "DNI del alumno",
-                        "type": "string"
+                        "type": "string",
+                        "example": "12345678"
                     },
                     "nombre": {
                         "description": "Nombre del alumno",
-                        "type": "string"
+                        "type": "string",
+                        "example": "Juan"
                     },
                     "apellido": {
                         "description": "Apellido del alumno",
-                        "type": "string"
+                        "type": "string",
+                        "example": "Perez"
                     },
                     "email": {
                         "description": "Email del alumno",
-                        "type": "string"
+                        "type": "string",
+                        "example": "juanPerez@gmail.com"
                     },
                     "contrasenia": {
                         "description": "Contraseña del alumno",
-                        "type": "string"
+                        "type": "string",
+                        "example": "12345678"
                     },
                     "tipo": {
                         "description": "Tipo de usuario",
@@ -367,8 +492,10 @@
                         "enum": [
                             "alumno",
                             "docente",
-                            "admin"
-                        ]
+                            "admin",
+                            "visitante"
+                        ],
+                        "example": "alumno"
                     }
                 },
                 "type": "object"
@@ -418,7 +545,8 @@
                         "enum": [
                             "alumno",
                             "docente",
-                            "admin"
+                            "admin",
+                            "visitante"
                         ]
                     },
                     "fecha_creacion": {

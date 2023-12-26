@@ -21,20 +21,21 @@ class UsuarioMapper
             'tipo' => $usuarioData->tipo,
             'fecha_modificacion' => Carbon::now(),
             'fecha_creacion' => Carbon::now()
-
         ]);
     }
 
-    public static function toUsuarioData($usuario)
+    public static function toUsuarioData($usuario, $pass)
     {
-        return new UsuarioData(
-            $usuario->dni,
-            $usuario->nombre,
-            $usuario->apellido,
-            $usuario->email,
-            $usuario->contrasenia,
-            $usuario->tipo
-        );
+        return [
+            'dni' => $usuario->dni,
+            'nombre' => $usuario->nombre,
+            'apellido' => $usuario->apellido,
+            'email' => $usuario->email,
+            'contrasenia' => Hash::make($pass),
+            'tipo' => $usuario->tipo
+        ];
     }
+
+
 
 }
