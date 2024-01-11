@@ -10,15 +10,15 @@ use Dflydev\DotAccessData\Data;
  *     title="AulaData",
  *     description="Esquema del objeto AulaData",
  *     @OA\Property(
- *     property="nro",
- *     type="integer",
- *     description="Número del aula"
- * ),
+ *          property="nro",
+ *          type="integer",
+ *          description="Número del aula"
+ *     ),
  *     @OA\Property(
- *     property="laboratorio",
- *     type="boolean",
- *     description="Laboratorio del aula"
- * ),
+ *          property="laboratorio",
+ *          type="boolean",
+ *          description="Laboratorio del aula"
+ *     ),
  * )
  */
 class AulaData extends Data

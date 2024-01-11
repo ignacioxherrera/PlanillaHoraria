@@ -17,7 +17,7 @@ class UsuarioMapper
             'nombre' => $usuarioData->nombre,
             'apellido' => $usuarioData->apellido,
             'email' => $usuarioData->email,
-            'contrasenia' => Hash::make($usuarioData->contrasenia),
+            'contrasenia' => $usuarioData->contrasenia,
             'tipo' => $usuarioData->tipo,
             'fecha_modificacion' => Carbon::now(),
             'fecha_creacion' => Carbon::now()
@@ -31,7 +31,7 @@ class UsuarioMapper
             'nombre' => $usuario->nombre,
             'apellido' => $usuario->apellido,
             'email' => $usuario->email,
-            'contrasenia' => Hash::make($pass),
+            'contrasenia' => $pass,
             'tipo' => $usuario->tipo
         ];
     }

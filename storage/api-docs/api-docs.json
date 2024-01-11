@@ -18,12 +18,12 @@
                 "tags": [
                     "Aula"
                 ],
-                "summary": "Obtener lista de aulas",
-                "description": "Devuelve la lista de aulas",
-                "operationId": "getAulasList",
+                "summary": "Obtener todas las aulas",
+                "description": "Devuelve todas las aulas",
+                "operationId": "getAulas",
                 "responses": {
                     "200": {
-                        "description": "Lista de aulas",
+                        "description": "Aulas",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -34,6 +34,37 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Error al obtener las aulas"
+                    }
+                }
+            }
+        },
+        "/api/aulas/laboratorios": {
+            "get": {
+                "tags": [
+                    "Aula"
+                ],
+                "summary": "Obtener todos los laboratorios",
+                "description": "Devuelve todos los laboratorios",
+                "operationId": "getLaboratorios",
+                "responses": {
+                    "200": {
+                        "description": "Laboratorios",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Aula"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al obtener los laboratorios"
                     }
                 }
             }
@@ -45,7 +76,7 @@
                 ],
                 "summary": "Obtener aula por nro",
                 "description": "Devuelve un aula",
-                "operationId": "getAulaByNro",
+                "operationId": "getAulaPorNro",
                 "parameters": [
                     {
                         "name": "nro",
@@ -53,7 +84,7 @@
                         "description": "Número del aula",
                         "required": true,
                         "schema": {
-                            "type": "integer",
+                            "type": "string",
                             "format": "int64"
                         }
                     }
@@ -70,7 +101,10 @@
                         }
                     },
                     "404": {
-                        "description": "Aula no encontrada"
+                        "description": "No existe el aula"
+                    },
+                    "500": {
+                        "description": "Error al obtener el aula"
                     }
                 }
             }
@@ -82,8 +116,9 @@
                 ],
                 "summary": "Guardar aula",
                 "description": "Guardar un aula",
-                "operationId": "saveAula",
+                "operationId": "guardarAula",
                 "requestBody": {
+                    "description": "Aula a guardar",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -95,7 +130,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Aula creado correctamente",
+                        "description": "Aula",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -110,14 +145,65 @@
                 }
             }
         },
+        "/api/aulas/actualizar/{nro}": {
+            "put": {
+                "tags": [
+                    "Aula"
+                ],
+                "summary": "Actualizar aula",
+                "description": "Actualizar un aula",
+                "operationId": "actualizarAula",
+                "parameters": [
+                    {
+                        "name": "nro",
+                        "in": "path",
+                        "description": "Número del aula",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Aula a actualizar",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AulaData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Aula",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Aula"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No existe el aula"
+                    },
+                    "500": {
+                        "description": "Error al actualizar el aula"
+                    }
+                }
+            }
+        },
         "/api/aulas/eliminar/{nro}": {
             "delete": {
                 "tags": [
                     "Aula"
                 ],
                 "summary": "Eliminar aula por nro",
-                "description": "Eliminar un aula por nro",
-                "operationId": "deleteAula",
+                "description": "Eliminar aula por nro",
+                "operationId": "eliminarAulaPorNro",
                 "parameters": [
                     {
                         "name": "nro",
@@ -132,17 +218,634 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Aula eliminado correctamente",
+                        "description": "Aula eliminada correctamente"
+                    },
+                    "404": {
+                        "description": "No existe el aula"
+                    },
+                    "500": {
+                        "description": "Error al eliminar el aula"
+                    }
+                }
+            }
+        },
+        "/api/comisiones": {
+            "get": {
+                "tags": [
+                    "Comision"
+                ],
+                "summary": "Obtener todas las comisiones",
+                "description": "Obtener todas las comisiones",
+                "operationId": "97297c51f29bb66399681d7324fa959a",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Aula"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Comision"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al obtener las comisiones"
+                    }
+                }
+            }
+        },
+        "/api/comisiones/carreras/{carrera}": {
+            "get": {
+                "tags": [
+                    "Comision"
+                ],
+                "summary": "Obtener comisiones por carrera",
+                "description": "Obtener comisiones por carrera",
+                "operationId": "0b3243c3ffd7cf5daa71d626fa41ae0d",
+                "parameters": [
+                    {
+                        "name": "carrera",
+                        "in": "path",
+                        "description": "Carrera de la comision",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Comision"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al obtener las comisiones"
+                    }
+                }
+            }
+        },
+        "/api/comisiones/{id}": {
+            "get": {
+                "tags": [
+                    "Comision"
+                ],
+                "summary": "Obtener comision por id",
+                "description": "Obtener comision por id",
+                "operationId": "getComisionPorId",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id de la comision",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comision"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Aula no encontrada"
+                        "description": "Comision no encontrada"
+                    },
+                    "500": {
+                        "description": "Error al obtener la comision"
+                    }
+                }
+            }
+        },
+        "/api/comisiones/guardar": {
+            "post": {
+                "tags": [
+                    "Comision"
+                ],
+                "summary": "Guardar comision",
+                "description": "Guardar comision",
+                "operationId": "4d6c475bbf4e91043728105696b3b700",
+                "requestBody": {
+                    "description": "Datos de la comision",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ComisionData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComisionData"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al guardar la comision"
+                    }
+                }
+            }
+        },
+        "/api/comisiones/actualizar/{id}": {
+            "put": {
+                "tags": [
+                    "Comision"
+                ],
+                "summary": "Actualizar comision",
+                "description": "Actualizar comision",
+                "operationId": "79d09493fa6d5acaad346b7984f4c58e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id de la comision",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos de la comision",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ComisionData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComisionData"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Comision no encontrada"
+                    },
+                    "500": {
+                        "description": "Error al actualizar la comision"
+                    }
+                }
+            }
+        },
+        "/api/comisiones/eliminar/{id}": {
+            "delete": {
+                "tags": [
+                    "Comision"
+                ],
+                "summary": "Eliminar comision",
+                "description": "Eliminar comision",
+                "operationId": "6e16fe9c8fc04739512c7156d7ef7723",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id de la comision",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "404": {
+                        "description": "Comision no encontrada"
+                    },
+                    "500": {
+                        "description": "Error al eliminar la comision"
+                    }
+                }
+            }
+        },
+        "/api/horarios": {
+            "get": {
+                "tags": [
+                    "Horario"
+                ],
+                "summary": "Obtener todos los horarios",
+                "description": "Devuelve todos los horarios",
+                "operationId": "getHorarios",
+                "responses": {
+                    "200": {
+                        "description": "Horarios",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Horario"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al obtener los horarios"
+                    }
+                }
+            }
+        },
+        "/api/horarios/{id}": {
+            "get": {
+                "tags": [
+                    "Horario"
+                ],
+                "summary": "Obtener horario por id",
+                "description": "Devuelve un horario",
+                "operationId": "getHorarioPorId",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del horario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Horario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Horario"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No existe el horario"
+                    },
+                    "500": {
+                        "description": "Error al obtener el horario"
+                    }
+                }
+            }
+        },
+        "/api/horarios/guardar": {
+            "post": {
+                "tags": [
+                    "Horario"
+                ],
+                "summary": "Guardar horario",
+                "description": "Guardar un horario",
+                "operationId": "guardarHorario",
+                "requestBody": {
+                    "description": "Horario a guardar",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/HorarioData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Horario creado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HorarioData"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al guardar el horario"
+                    }
+                }
+            }
+        },
+        "/api/horarios/actualizar/{id}": {
+            "put": {
+                "tags": [
+                    "Horario"
+                ],
+                "summary": "Actualizar horario",
+                "description": "Actualizar un horario",
+                "operationId": "actualizarHorario",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del horario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Horario a actualizar",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/HorarioData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Horario actualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HorarioData"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No existe el horario"
+                    },
+                    "500": {
+                        "description": "Error al actualizar el horario"
+                    }
+                }
+            }
+        },
+        "/api/horarios/eliminar/{id}": {
+            "delete": {
+                "tags": [
+                    "Horario"
+                ],
+                "summary": "Eliminar horario",
+                "description": "Eliminar un horario",
+                "operationId": "eliminarHorario",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del horario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Horario eliminado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HorarioData"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No existe el horario"
+                    },
+                    "500": {
+                        "description": "Error al eliminar el horario"
+                    }
+                }
+            }
+        },
+        "/api/materias": {
+            "get": {
+                "tags": [
+                    "Materias"
+                ],
+                "summary": "Obtener todas las materias",
+                "operationId": "918cb2607842cfe87ff9f6796c4cc540",
+                "responses": {
+                    "200": {
+                        "description": "Obtener todas las materias"
+                    },
+                    "500": {
+                        "description": "Error al obtener las materias"
+                    }
+                }
+            }
+        },
+        "/api/materias/{id}": {
+            "get": {
+                "tags": [
+                    "Materias"
+                ],
+                "summary": "Obtener una materia por id",
+                "operationId": "808b887ba424ec0048dbd9a11aa22ffe",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la materia",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtener una materia por id"
+                    },
+                    "404": {
+                        "description": "No existe la materia"
+                    },
+                    "500": {
+                        "description": "Error al obtener la materia"
+                    }
+                }
+            }
+        },
+        "/api/materias/nombre/{nombre}": {
+            "get": {
+                "tags": [
+                    "Materias"
+                ],
+                "summary": "Obtener una materia por nombre",
+                "operationId": "77797f3b259f8f181c971a1a38a5b35b",
+                "parameters": [
+                    {
+                        "name": "nombre",
+                        "in": "path",
+                        "description": "Nombre de la materia",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "int64"
+                        },
+                        "example": "Programacion"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtener una materia por nombre",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MateriaValidate"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No existe la materia"
+                    },
+                    "500": {
+                        "description": "Error al obtener la materia"
+                    }
+                }
+            }
+        },
+        "/api/materias/guardar": {
+            "post": {
+                "tags": [
+                    "Materias"
+                ],
+                "summary": "Guardar una materia",
+                "operationId": "03f231d6d3580d529579faf20ce0207e",
+                "requestBody": {
+                    "description": "Datos de la materia",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MateriaData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Guardar una materia"
+                    },
+                    "400": {
+                        "description": "Ya existe una materia con ese nombre"
+                    },
+                    "500": {
+                        "description": "Error al guardar la materia"
+                    }
+                }
+            }
+        },
+        "/api/materias/actualizar/{id}": {
+            "put": {
+                "tags": [
+                    "Materias"
+                ],
+                "summary": "Actualizar una materia",
+                "operationId": "0682bdb84e7fe75b40f6ba6d74fccb24",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la materia",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos de la materia",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MateriaData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizar una materia"
+                    },
+                    "404": {
+                        "description": "No existe la materia"
+                    },
+                    "500": {
+                        "description": "Error al actualizar la materia"
+                    }
+                }
+            }
+        },
+        "/api/materias/eliminar/{id}": {
+            "delete": {
+                "tags": [
+                    "Materias"
+                ],
+                "summary": "Eliminar una materia",
+                "operationId": "0a98ca976cdd4d9082492a0b78c3f495",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la materia",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Eliminar una materia"
+                    },
+                    "404": {
+                        "description": "No existe la materia"
+                    },
+                    "500": {
+                        "description": "Error al eliminar la materia"
                     }
                 }
             }
@@ -457,6 +1160,68 @@
                 },
                 "type": "object"
             },
+            "ComisionData": {
+                "title": "ComisionData",
+                "description": "Esquema del objeto ComisionData",
+                "properties": {
+                    "anio": {
+                        "description": "Año de la comision",
+                        "type": "integer",
+                        "example": "2"
+                    },
+                    "division": {
+                        "description": "Division de la comision",
+                        "type": "Integer",
+                        "example": "3"
+                    },
+                    "carrera": {
+                        "description": "Carrera de la comision",
+                        "type": "enum",
+                        "example": "DS"
+                    }
+                },
+                "type": "object"
+            },
+            "HorarioData": {
+                "title": "HorarioData",
+                "description": "Esquema del objeto HorarioData",
+                "properties": {
+                    "inicio": {
+                        "description": "Hora de inicio de la clase",
+                        "type": "time",
+                        "example": "19:20:00"
+                    },
+                    "fin": {
+                        "description": "Hora de fin de la clase",
+                        "type": "time",
+                        "example": "20:40:00"
+                    },
+                    "dia": {
+                        "description": "Dia de la clase",
+                        "type": "enum",
+                        "enum": [
+                            "lunes",
+                            "martes",
+                            "miercoles",
+                            "jueves",
+                            "viernes"
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "MateriaData": {
+                "title": "MateriaData",
+                "description": "Esquema del objeto MateriaData",
+                "properties": {
+                    "nombre": {
+                        "description": "Nombre de la materia",
+                        "type": "string",
+                        "example": "Matematicas"
+                    }
+                },
+                "type": "object"
+            },
             "UsuarioData": {
                 "title": "UsuarioData",
                 "description": "Esquema del objeto UsuarioData",
@@ -511,6 +1276,102 @@
                     "laboratorio": {
                         "description": "Laboratorio del aula",
                         "type": "boolean"
+                    },
+                    "fecha_creacion": {
+                        "description": "Fecha de creacion del aula",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "fecha_modificacion": {
+                        "description": "Fecha de modificacion del aula",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Comision": {
+                "title": "Comision",
+                "description": "Esquema del objeto Comision",
+                "properties": {
+                    "anio": {
+                        "description": "Año de la comision",
+                        "type": "integer"
+                    },
+                    "division": {
+                        "description": "Division de la comision",
+                        "type": "string"
+                    },
+                    "carrera": {
+                        "description": "Carrera de la comision",
+                        "type": "string"
+                    },
+                    "fecha_creacion": {
+                        "description": "Fecha de creacion de la comision",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "fecha_modificacion": {
+                        "description": "Fecha de modificacion de la comision",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Horario": {
+                "title": "Horario",
+                "description": "Esquema del objeto Horario",
+                "properties": {
+                    "inicio": {
+                        "description": "Hora de inicio de la clase",
+                        "type": "time"
+                    },
+                    "fin": {
+                        "description": "Hora de fin de la clase",
+                        "type": "time"
+                    },
+                    "dia": {
+                        "description": "Dia de la clase",
+                        "type": "enum",
+                        "enum": [
+                            "lunes",
+                            "martes",
+                            "miercoles",
+                            "jueves",
+                            "viernes"
+                        ]
+                    },
+                    "fecha_creacion": {
+                        "description": "Fecha de creacion del horario",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "fecha_modificacion": {
+                        "description": "Fecha de modificacion del horario",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "MateriaValidate": {
+                "title": "MateriaValidate",
+                "description": "Esquema del objeto MateriaValidate",
+                "properties": {
+                    "nombre": {
+                        "description": "Nombre de la materia",
+                        "type": "string"
+                    },
+                    "fecha_creacion": {
+                        "description": "Fecha de creacion de la materia",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "fecha_modificacion": {
+                        "description": "Fecha de modificacion de la materia",
+                        "type": "string",
+                        "format": "date-time"
                     }
                 },
                 "type": "object"

@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('usuarios', function (Blueprint $table) {
-            $table->string('dni', 255)->primary();
-            $table->string('nombre', 255);
-            $table->string('apellido', 255);
-            $table->string('email', 255);
-            $table->string('contrasenia', 255);
-            $table->enum('tipo', ['alumno', 'docente', 'admin', 'visitante']);
+        Schema::create('horarios', function (Blueprint $table) {
+            $table->id();
+            $table->time('inicio');
+            $table->time('fin');
+            $table->enum('dia', ['lunes', 'martes', 'miercoles', 'jueves', 'viernes']);
             $table->dateTime('fecha_creacion');
             $table->dateTime('fecha_modificacion');
+
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('horarios');
     }
 };

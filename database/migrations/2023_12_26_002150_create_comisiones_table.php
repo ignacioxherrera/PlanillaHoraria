@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('comisiones', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->integer('anio');
+            $table->integer('division');
+            $table->enum('carrera', ['DS', 'ITI', 'AF']);
+            $table->dateTime('fecha_creacion');
+            $table->dateTime('fecha_modificacion');
         });
     }
 

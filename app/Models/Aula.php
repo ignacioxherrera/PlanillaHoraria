@@ -8,18 +8,28 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @OA\Schema(
  *     schema="Aula",
- *    title="Aula",
+ *     title="Aula",
  *     description="Esquema del objeto Aula",
  *     @OA\Property(
- *     property="nro",
- *     type="integer",
- *     description="Número del aula"
- * ),
+ *          property="nro",
+ *          type="integer",
+ *          description="Número del aula"
+ *     ),
  *     @OA\Property(
- *     property="laboratorio",
- *     type="boolean",
- *     description="Laboratorio del aula"
- * ),
+ *          property="laboratorio",
+ *          type="boolean",
+ *          description="Laboratorio del aula"
+ *     ),
+ *     @OA\Property(
+ *          property="fecha_creacion",
+ *          type="datetime",
+ *          description="Fecha de creacion del aula"
+ *     ),
+ *     @OA\Property(
+ *          property="fecha_modificacion",
+ *          type="datetime",
+ *          description="Fecha de modificacion del aula"
+ *     )
  * )
  */
 class Aula extends Model
@@ -36,6 +46,5 @@ class Aula extends Model
     public $timestamps = true;
 
     protected $fillable = ['nro', 'laboratorio', 'fecha_creacion', 'fecha_modificacion'];
-
 
 }

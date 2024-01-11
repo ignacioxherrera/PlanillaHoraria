@@ -3,12 +3,11 @@
 namespace App\Mappers;
 
 use App\Models\Aula;
-use App\Data\AulaData;
 use Carbon\Carbon;
 
 class AulaMapper
 {
-    public static function toAula(AulaData $aulaData)
+    public static function toAula($aulaData)
     {
         return new Aula([
             'nro' => $aulaData->nro,
@@ -18,12 +17,12 @@ class AulaMapper
         ]);
     }
 
-    public static function toAulaData(Aula $aula)
+    public static function toAulaData($aula)
     {
-        return new AulaData(
-            $aula->nro,
-            $aula->laboratorio
-        );
+        return [
+            'nro' => $aula->nro,
+            'laboratorio' =>$aula->laboratorio
+        ];
     }
 
 }
