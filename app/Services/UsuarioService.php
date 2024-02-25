@@ -35,6 +35,17 @@ class UsuarioService implements UsuarioRepository
 
     }
 
+    public function obtenerTodosAlumnos()
+    {
+        try {
+            $alumnos = Usuario::all();
+            return response()->json($alumnos, 200);
+        } catch (Exception $e) {
+            Log::error('Error al obtener los alumnos: ' . $e->getMessage());
+            return response()->json(['error' => 'Hubo un error al obtener los alumnos'], 500);
+        }
+    }
+
     public function obtenerUsuarioPorDni($dni)
     {
         $usuario = Usuario::find($dni);
@@ -55,7 +66,23 @@ class UsuarioService implements UsuarioRepository
             return response()->json(['error' => 'El email ya existe'], 400);
         }
         try {
-            $usuario = $this->usuarioMapper->toUsuario($usuarioData);
+            $usuario = $this->usuarioMapper->toUsuario($usuarioData);;
+            $usuario->save();
+            return response()->json(['success' => 'Usuario guardado correctamente'], 200);
+        } catch (Exception $e) {
+            Log::error('Error al guardar el usuario: ' . $e->getMessage());
+            return response()->json(['error' => 'Hubo un error al guardar el usuario'], 500);
+
+        }
+    }
+
+    public function guardarAlumno($usuarioData)
+    {
+        if ($this->usuarioValidate->emailExiste($usuarioData['email'])) {
+            return response()->json(['error' => 'El email ya existe'], 400);
+        }
+        try {
+            $usuario = $this->usuarioMapper->toAlumno($usuarioData);
             $usuario->save();
             return response()->json(['success' => 'Usuario guardado correctamente'], 200);
         } catch (Exception $e) {

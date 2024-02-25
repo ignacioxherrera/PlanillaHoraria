@@ -13,6 +13,171 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/usuarios/alumnos": {
+            "get": {
+                "tags": [
+                    "Alumno"
+                ],
+                "summary": "Obtener todos los alumnos",
+                "description": "Obtener todos los alumnos",
+                "operationId": "obtenerTodosAlumnos",
+                "responses": {
+                    "200": {
+                        "description": "Alumnos obtenidos correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Usuario"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No se encontraron alumnos"
+                    },
+                    "500": {
+                        "description": "Error al obtener los alumnos"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/alumnos/{dni}": {
+            "get": {
+                "tags": [
+                    "Alumno"
+                ],
+                "summary": "Obtener un alumno por dni",
+                "description": "Obtener un alumno por dni",
+                "operationId": "obtenerAlumnoPorDni",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del alumno",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Alumno obtenido correctamente"
+                    },
+                    "404": {
+                        "description": "Alumno no encontrado"
+                    },
+                    "500": {
+                        "description": "Error al obtener el alumno"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/guardar/alumno": {
+            "post": {
+                "tags": [
+                    "Alumno"
+                ],
+                "summary": "Guardar alumno",
+                "description": "Guardar un alumno",
+                "operationId": "guardarAlumno",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AlumnoData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Alumno guardado correctamente"
+                    },
+                    "500": {
+                        "description": "Error al guardar el alumno"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/actualizar/alumno/{dni}": {
+            "put": {
+                "tags": [
+                    "Alumno"
+                ],
+                "summary": "Actualizar alumno",
+                "description": "Actualizar un alumno",
+                "operationId": "actualizarAlumno",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del alumno",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AlumnoData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Alumno actualizado correctamente"
+                    },
+                    "404": {
+                        "description": "Alumno no encontrado"
+                    },
+                    "500": {
+                        "description": "Error al actualizar el alumno"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/eliminar/alumno/{dni}": {
+            "delete": {
+                "tags": [
+                    "Alumno"
+                ],
+                "summary": "Eliminar alumno",
+                "description": "Eliminar un alumno",
+                "operationId": "eliminarAlumno",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del alumno",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Alumno eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Alumno no encontrado"
+                    },
+                    "500": {
+                        "description": "Error al eliminar el alumno"
+                    }
+                }
+            }
+        },
         "/api/aulas": {
             "get": {
                 "tags": [
@@ -457,6 +622,151 @@
                 }
             }
         },
+        "/api/usuarios/docentes": {
+            "get": {
+                "tags": [
+                    "Docente"
+                ],
+                "summary": "Obtener todos los docentes",
+                "description": "Obtener todos los docentes",
+                "operationId": "obtenerTodosDocentes",
+                "responses": {
+                    "200": {
+                        "description": "Docentes obtenidos correctamente"
+                    },
+                    "500": {
+                        "description": "Error al obtener los docentes"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Docente"
+                ],
+                "summary": "Guardar un docente",
+                "description": "Guardar un docente",
+                "operationId": "guardarDocente",
+                "requestBody": {
+                    "description": "Objeto docente",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DocenteData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Docente guardado correctamente"
+                    },
+                    "400": {
+                        "description": "El email ya existe"
+                    },
+                    "500": {
+                        "description": "Error al guardar el docente"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/docentes/{dni}": {
+            "get": {
+                "tags": [
+                    "Docente"
+                ],
+                "summary": "Obtener un docente por dni",
+                "description": "Obtener un docente por dni",
+                "operationId": "obtenerDocentePorDni",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del docente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Docente obtenido correctamente"
+                    },
+                    "404": {
+                        "description": "Docente no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Docente"
+                ],
+                "summary": "Actualizar un docente",
+                "description": "Actualizar un docente",
+                "operationId": "actualizarDocente",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del docente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Objeto docente",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DocenteData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Docente actualizado correctamente"
+                    },
+                    "404": {
+                        "description": "Docente no encontrado"
+                    },
+                    "500": {
+                        "description": "Error al actualizar el docente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Docente"
+                ],
+                "summary": "Eliminar un docente",
+                "description": "Eliminar un docente",
+                "operationId": "eliminarDocentePorDni",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del docente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Docente eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Docente no encontrado"
+                    }
+                }
+            }
+        },
         "/api/horarios": {
             "get": {
                 "tags": [
@@ -878,6 +1188,37 @@
                 }
             }
         },
+        "/api/usuarios/alumnos2": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Obtener todos los alumnos",
+                "description": "Obtener todos los alumnos",
+                "operationId": "obtenerTodosAlumnos2",
+                "responses": {
+                    "200": {
+                        "description": "Alumnos obtenidos correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Usuario"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No se encontraron alumnos"
+                    },
+                    "500": {
+                        "description": "Error al obtener los alumnos"
+                    }
+                }
+            }
+        },
         "/api/usuarios/{dni}": {
             "get": {
                 "tags": [
@@ -1145,6 +1486,43 @@
     },
     "components": {
         "schemas": {
+            "AlumnoData": {
+                "title": "AlumnoData",
+                "description": "Esquema del objeto AlumnoData",
+                "properties": {
+                    "dni": {
+                        "description": "DNI del alumno",
+                        "type": "string",
+                        "example": "12345678"
+                    },
+                    "nombre": {
+                        "description": "Nombre del alumno",
+                        "type": "string",
+                        "example": "Juan"
+                    },
+                    "apellido": {
+                        "description": "Apellido del alumno",
+                        "type": "string",
+                        "example": "Perez"
+                    },
+                    "email": {
+                        "description": "Email del alumno",
+                        "type": "string",
+                        "example": "juanPerez@gmail.com"
+                    },
+                    "contrasenia": {
+                        "description": "Contraseña del alumno",
+                        "type": "string",
+                        "example": "12345678"
+                    },
+                    "comision_id": {
+                        "description": "Id de la comision a la que pertenece el alumno",
+                        "type": "integer",
+                        "example": "1"
+                    }
+                },
+                "type": "object"
+            },
             "AulaData": {
                 "title": "AulaData",
                 "description": "Esquema del objeto AulaData",
@@ -1178,6 +1556,38 @@
                         "description": "Carrera de la comision",
                         "type": "enum",
                         "example": "DS"
+                    }
+                },
+                "type": "object"
+            },
+            "DocenteData": {
+                "title": "DocenteData",
+                "description": "Esquema del objeto DocenteData",
+                "properties": {
+                    "dni": {
+                        "description": "DNI del docente",
+                        "type": "string",
+                        "example": "12345678"
+                    },
+                    "nombre": {
+                        "description": "Nombre del docente",
+                        "type": "string",
+                        "example": "Juan"
+                    },
+                    "apellido": {
+                        "description": "Apellido del docente",
+                        "type": "string",
+                        "example": "Perez"
+                    },
+                    "email": {
+                        "description": "Email del docente",
+                        "type": "string",
+                        "example": "juanPerez@gmail.com"
+                    },
+                    "contrasenia": {
+                        "description": "Contraseña del docente",
+                        "type": "string",
+                        "example": "12345678"
                     }
                 },
                 "type": "object"
@@ -1419,6 +1829,10 @@
                         "description": "Fecha de modificacion del usuario",
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "comision_id": {
+                        "description": "Id de la comision a la que pertenece el alumno",
+                        "type": "integer"
                     }
                 },
                 "type": "object"

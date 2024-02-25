@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Data\UsuarioData;
 use App\Services\UsuarioService;
+use App\Services\AlumnoService;
 
 
 class UsuarioController extends Controller
 {
 
-    protected $usuarioService;
+    protected $usuarioService, $alumnoService;
 
-    public function __construct(UsuarioService $usuarioService){
+    public function __construct(UsuarioService $usuarioService, AlumnoService $alumnoService){
         $this->usuarioService = $usuarioService;
+        $this->alumnoService = $alumnoService;
     }
 
     /**
@@ -41,7 +43,35 @@ class UsuarioController extends Controller
         return $this->usuarioService->obtenerTodosUsuarios();
     }
 
-
+    /**
+     * @OA\Get(
+     *     path="/api/usuarios/alumnos2",
+     *     summary="Obtener todos los alumnos",
+     *     description="Obtener todos los alumnos",
+     *     operationId="obtenerTodosAlumnos2",
+     *     tags={"Usuario"},
+     *     @OA\Response(
+     *     response=200,
+     *     description="Alumnos obtenidos correctamente",
+     *     @OA\JsonContent(
+     *     type="array",
+     *     @OA\Items(ref="#/components/schemas/Usuario")
+     *    )
+     * ),
+     *     @OA\Response(
+     *     response=404,
+     *     description="No se encontraron alumnos"
+     * ),
+     *     @OA\Response(
+     *     response=500,
+     *     description="Error al obtener los alumnos"
+     * )
+     * )
+     */
+    public function index2()
+    {
+        return $this->usuarioService->obtenerTodosAlumnos();
+    }
 
     /**
      * @OA\Get(

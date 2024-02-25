@@ -20,7 +20,8 @@ class UsuarioMapper
             'contrasenia' => $usuarioData->contrasenia,
             'tipo' => $usuarioData->tipo,
             'fecha_modificacion' => Carbon::now(),
-            'fecha_creacion' => Carbon::now()
+            'fecha_creacion' => Carbon::now(),
+            'comision_id' => null
         ]);
     }
 
@@ -36,6 +37,19 @@ class UsuarioMapper
         ];
     }
 
-
+    public static function toAlumno($usuarioData)
+    {
+        return new Usuario([
+            'dni' => $usuarioData->dni,
+            'nombre' => $usuarioData->nombre,
+            'apellido' => $usuarioData->apellido,
+            'email' => $usuarioData->email,
+            'contrasenia' => $usuarioData->contrasenia,
+            'tipo' => 'alumno',
+            'fecha_modificacion' => Carbon::now(),
+            'fecha_creacion' => Carbon::now(),
+            'comision_id' =>  $usuarioData->comision_id
+        ]);
+    }
 
 }

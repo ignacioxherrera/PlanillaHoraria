@@ -51,7 +51,12 @@ use Illuminate\Database\Eloquent\Model;
  *          property="fecha_modificacion",
  *          type="datetime",
  *          description="Fecha de modificacion del usuario"
- *     )
+ *     ),
+ *     @OA\Property(
+ *     property="comision_id",
+ *     type="integer",
+ *     description="Id de la comision a la que pertenece el alumno"
+ *   )
  * )
  */
 class Usuario extends Model
@@ -68,12 +73,17 @@ class Usuario extends Model
 
     public $timestamps = true;
 
-    protected $fillable = ['dni', 'nombre', 'apellido', 'email', 'contrasenia', 'tipo', 'fecha_creacion', 'fecha_modificacion'];
+    protected $fillable = ['dni', 'nombre', 'apellido', 'email', 'contrasenia', 'tipo', 'fecha_creacion', 'fecha_modificacion', 'comision_id'];
 
     protected $hidden = ['contrasenia'];
 
     protected $casts = [
         'contrasenia' => PasswordCast::class,
     ];
+
+    public function comision()
+    {
+        return $this->belongsTo(Comision::class, 'comision_id');
+    }
 
 }

@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/saludos', function () {
-    return view('app');
-});
-
 
 // Usuarios
 Route::get('/api/usuarios', 'App\Http\Controllers\UsuarioController@index');
@@ -26,6 +22,23 @@ Route::put('/api/usuarios/actualizar/{dni}', 'App\Http\Controllers\UsuarioContro
 Route::put('/api/usuarios/actualizar/datos/{dni}', 'App\Http\Controllers\UsuarioController@updateDatos');
 Route::put('/api/usuarios/actualizar/password/{dni}', 'App\Http\Controllers\UsuarioController@updatePassword');
 Route::delete('/api/usuarios/eliminar/{dni}', 'App\Http\Controllers\UsuarioController@destroy');
+
+    // Alumnos
+Route::get('/api/usuarios/alumnos2', 'App\Http\Controllers\UsuarioController@index2');
+    Route::get('/api/usuarios/alumnos', 'App\Http\Controllers\AlumnoController@index');
+    Route::get('/api/usuarios/alumnos/{dni}', 'App\Http\Controllers\AlumnoController@show');
+    Route::post('/api/usuarios/guardar/alumno', 'App\Http\Controllers\AlumnoController@store');
+    Route::put('/api/usuarios/actualizar/alumno/{dni}', 'App\Http\Controllers\AlumnoController@update');
+    Route::delete('/api/usuarios/eliminar/alumno/{dni}', 'App\Http\Controllers\AlumnoController@destroy');
+
+    // Docentes
+    Route::get('/api/usuarios/docentes', 'App\Http\Controllers\DocenteController@index');
+    Route::get('/api/usuarios/docentes/{dni}', 'App\Http\Controllers\DocenteController@show');
+    Route::post('/api/usuarios/guardar/docente', 'App\Http\Controllers\DocenteController@store');
+    Route::put('/api/usuarios/actualizar/docente/{dni}', 'App\Http\Controllers\DocenteController@update');
+    Route::delete('/api/usuarios/eliminar/docente/{dni}', 'App\Http\Controllers\DocenteController@destroy');
+
+
 
 // Aulas
 Route::get('/api/aulas', 'App\Http\Controllers\AulaController@index');
