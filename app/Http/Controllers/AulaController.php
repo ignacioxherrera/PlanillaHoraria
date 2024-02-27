@@ -13,6 +13,62 @@ class AulaController extends Controller
         $this->aulaService = $aulaService;
     }
 
+
+    public function index(){
+        $aulas = $this->aulaService->obtenerTodasAulas();
+        return view('aula.index', compact('aulas'));
+    }
+
+
+    public function obtenerAula(Request $request){
+        $id = $request->input('id');
+        $aula = $this->aulaService->obtenerAula($id);
+        return view('aula.show', compact('aula'));
+    }
+
+
+    public function guardarAula(Request $request){
+        $nombre = $request->input('nombre');
+        $capacidad = $request->input('capacidad');
+        $tipo_aula = $request->input('tipo_aula');
+
+        $response=$this->aulaService->guardarAula($nombre,$capacidad,$tipo_aula);
+        if (isset($response['success'])) {
+            return redirect()->route('aula.index')->with('success', $response['success']);
+        } else {
+            return redirect()->route('aula.index')->withErrors(['error' => $response['error']]);
+        }
+    }
+
+
+    public function actualizarAula(Request $request){
+        $id = $request->input('id');
+        $nombre = $request->input('nombre');
+        $capacidad = $request->input('capacidad');
+        $tipo_aula = $request->input('tipo_aula');
+        $response=$this->aulaService->actualizarAula($id,$nombre,$capacidad,$tipo_aula);
+        if (isset($response['success'])) {
+            return redirect()->route('aula.index')->with('success', $response['success']);
+        } else {
+            return redirect()->route('aula.index')->withErrors(['error' => $response['error']]);
+        }
+    }
+
+
+    public function eliminarAula(Request $request){
+        $id = $request->input('id');
+        $response=$this->aulaService->eliminarAula($id);
+        if (isset($response['success'])) {
+            return redirect()->route('aula.index')->with('success', $response['success']);
+        } else {
+            return redirect()->route('aula.index')->withErrors(['error' => $response['error']]);
+        }
+    }
+
+
+    //-------------------------------------------------------------------------------------------------------------
+    // Swagger Documentation
+
     /**
      * @OA\Get(
      *      path="/api/aulas",
@@ -34,132 +90,96 @@ class AulaController extends Controller
      *      )
      * )
      */
-    public function index(){
-        return $this->aulaService->obtenerTodasAulas();
+    public function inicio(){
+        return $this->aulaService->obtenerAulas();
     }
 
 
     /**
      * @OA\Get(
-     *      path="/api/aulas/laboratorios",
-     *     summary="Obtener todos los laboratorios",
-     *     description="Devuelve todos los laboratorios",
-     *     operationId="getLaboratorios",
-     *     tags={"Aula"},
-     *     @OA\Response(
-     *          response=200,
-     *          description="Laboratorios",
-     *          @OA\JsonContent(
-     *              type="array",
-     *              @OA\Items(ref="#/components/schemas/Aula")
-     *          )
-     *      ),
-     *     @OA\Response(
-     *          response=500,
-     *          description="Error al obtener los laboratorios"
-     *      )
-     * )
-     */
-    public function obtenerLaboratorios(){
-        return $this->aulaService->obtenerTodosLaboratorios();
-    }
-
-
-    /**
-     * @OA\Get(
-     *     path="/api/aulas/{nro}",
-     *     summary="Obtener aula por nro",
-     *     description="Devuelve un aula",
-     *     operationId="getAulaPorNro",
+     *     path="/api/aulas/{id}",
+     *     summary="Obtener un aula por id",
+     *     description="Obtener un aula por id",
+     *     operationId="obtenerAulaPorId",
      *     tags={"Aula"},
      *     @OA\Parameter(
-     *          name="nro",
-     *          in="path",
-     *          description="Número del aula",
-     *          required=true,
-     *          @OA\Schema(
-     *              type="string",
-     *              format="int64"
-     *          )
-     *     ),
-     *     @OA\Response(
-     *          response=200,
-     *          description="Aula",
-     *          @OA\JsonContent(ref="#/components/schemas/Aula")
-     *     ),
-     *     @OA\Response(
-     *          response=404,
-     *          description="No existe el aula"
-     *     ),
-     *     @OA\Response(
-     *          response=500,
-     *          description="Error al obtener el aula"
+     *     name="id",
+     *     in="path",
+     *     description="Id del aula",
+     *     required=true,
+     *     @OA\Schema(
+     *         type="integer"
      *     )
+     *     ),
+     *     @OA\Response(
+     *     response=200,
+     *     description="Aula obtenida correctamente",
+     *     @OA\JsonContent(ref="#/components/schemas/Aula")
+     *     ),
+     *     @OA\Response(
+     *     response=404,
+     *     description="No se encontró el aula"
+     *  ),
+     *     @OA\Response(
+     *     response=500,
+     *     description="Error al obtener el aula"
+     *   )
      * )
      */
-    public function show($nro){
-        return $this->aulaService->obtenerAulaPorNro($nro);
+    public function show($id){
+        return $this->aulaService->obtenerAulaPorId($id);
     }
 
 
     /**
      * @OA\Post(
-     *     path="/api/aulas/guardar",
-     *     summary="Guardar aula",
+     *     path="/api/aulas",
+     *     summary="Guardar un aula",
      *     description="Guardar un aula",
      *     operationId="guardarAula",
      *     tags={"Aula"},
      *     @OA\RequestBody(
-     *          description="Aula a guardar",
-     *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/AulaData")
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/AulaData")
      *     ),
      *     @OA\Response(
-     *          response=201,
-     *          description="Aula",
-     *          @OA\JsonContent(ref="#/components/schemas/Aula")
-     *     ),
+     *     response=200,
+     *     description="Aula guardada correctamente"
+     *  ),
      *     @OA\Response(
-     *          response=500,
-     *          description="Error al guardar el aula"
-     *     )
+     *     response=400,
+     *     description="Error al guardar el aula"
+     *  )
      * )
      */
     public function store(Request $request){
-        return $this->aulaService->guardarAula($request);
+        return $this->aulaService->guardarAulas($request);
     }
 
 
     /**
      * @OA\Put(
-     *     path="/api/aulas/actualizar/{nro}",
-     *     summary="Actualizar aula",
+     *     path="/api/aulas/actualizar/{id}",
+     *     summary="Actualizar un aula",
      *     description="Actualizar un aula",
      *     operationId="actualizarAula",
      *     tags={"Aula"},
      *     @OA\Parameter(
-     *          name="nro",
+     *          name="id",
      *          in="path",
-     *          description="Número del aula",
+     *          description="Id del aula",
      *          required=true,
      *          @OA\Schema(
-     *              type="integer",
-     *              format="int64"
+     *              type="integer"
      *          )
      *     ),
      *     @OA\RequestBody(
-     *          description="Aula a actualizar",
      *          required=true,
      *          @OA\JsonContent(ref="#/components/schemas/AulaData")
      *     ),
      *     @OA\Response(
      *          response=200,
-     *          description="Aula",
-     *          @OA\JsonContent(ref="#/components/schemas/Aula")
-     *     ),
-     *     @OA\Response(
-     *          response=404,
-     *          description="No existe el aula"
+     *          description="Aula actualizada correctamente"
      *     ),
      *     @OA\Response(
      *          response=500,
@@ -167,45 +187,39 @@ class AulaController extends Controller
      *     )
      * )
      */
-    public function update(Request $request, $nro){
-        return $this->aulaService->actualizarAula($request, $nro);
+    public function update(Request $request, $id){
+        return $this->aulaService->actualizarAulas($request, $id);
     }
 
 
     /**
      * @OA\Delete(
-     *     path="/api/aulas/eliminar/{nro}",
-     *     summary="Eliminar aula por nro",
-     *     description="Eliminar aula por nro",
-     *     operationId="eliminarAulaPorNro",
+     *     path="/api/aulas/eliminar/{id}",
+     *     summary="Eliminar un aula",
+     *     description="Eliminar un aula",
+     *     operationId="eliminarAula",
      *     tags={"Aula"},
      *     @OA\Parameter(
-     *          name="nro",
-     *          in="path",
-     *          description="Número del aula",
-     *          required=true,
-     *          @OA\Schema(
-     *              type="integer",
-     *              format="int64"
-     *          )
+     *     name="id",
+     *     in="path",
+     *     description="Id del aula",
+     *     required=true,
+     *     @OA\Schema(
+     *     type="integer"
+     *    )
      *     ),
      *     @OA\Response(
-     *          response=200,
-     *          description="Aula eliminada correctamente"
-     *     ),
+     *     response=200,
+     *     description="Aula eliminada correctamente"
+     * ),
      *     @OA\Response(
-     *          response=404,
-     *          description="No existe el aula"
-     *     ),
-     *     @OA\Response(
-     *          response=500,
-     *          description="Error al eliminar el aula"
-     *     )
+     *     response=500,
+     *     description="Error al eliminar el aula"
+     * )
      * )
      */
-    public function destroy($nro){
-        return $this->aulaService->eliminarAulaPorNro($nro);
+    public function destroy($id){
+        return $this->aulaService->eliminarAulas($id);
     }
-
 
 }

@@ -4,31 +4,32 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @OA\Schema(
  *     schema="Aula",
  *     title="Aula",
  *     description="Esquema del objeto Aula",
  *     @OA\Property(
- *          property="nro",
+ *          property="id_aula",
  *          type="integer",
- *          description="Número del aula"
+ *          description="Id del aula"
  *     ),
  *     @OA\Property(
- *          property="laboratorio",
- *          type="boolean",
- *          description="Laboratorio del aula"
+ *          property="nombre",
+ *          type="string",
+ *          description="Nombre del aula"
  *     ),
  *     @OA\Property(
- *          property="fecha_creacion",
- *          type="datetime",
- *          description="Fecha de creacion del aula"
+ *          property="capacidad",
+ *          type="integer",
+ *          description="Capacidad del aula"
  *     ),
  *     @OA\Property(
- *          property="fecha_modificacion",
- *          type="datetime",
- *          description="Fecha de modificacion del aula"
+ *          property="tipo_aula",
+ *          type="string",
+ *          description="Tipo de aula"
  *     )
  * )
  */
@@ -36,15 +37,14 @@ class Aula extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['nombre', 'capacidad', 'tipo_aula'];
     protected $table = 'aulas';
+    protected $primaryKey = 'id_aula';
 
-    protected $primaryKey = 'nro';
-    public $incrementing = false;
-    const CREATED_AT = 'fecha_creacion';
-    const UPDATED_AT = 'fecha_modificacion';
 
-    public $timestamps = true;
 
-    protected $fillable = ['nro', 'laboratorio', 'fecha_creacion', 'fecha_modificacion'];
+    public function disponibilidad():HasMany{
+        return $this->hasMany(Disponibilidad::class,'id_aula','id_aula');
 
+    }
 }

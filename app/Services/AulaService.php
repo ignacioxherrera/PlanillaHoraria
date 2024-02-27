@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Data\AulaData;
 use App\Repositories\AulaRepository;
 use App\Mappers\AulaMapper;
 use App\Models\Aula;
@@ -12,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class AulaService implements AulaRepository
 {
 
-private $aulaMapper;
+    private $aulaMapper;
 
     public function __construct(AulaMapper $aulaMapper)
     {
@@ -21,6 +20,88 @@ private $aulaMapper;
 
     public function obtenerTodasAulas()
     {
+
+        $aulas = Aula::all();
+        return $aulas;
+
+    }
+
+
+
+    public function obtenerAula($id)
+    {
+        $aula = Aula::find($id);
+        if (is_null($aula)) {
+            return [];
+        }
+            return $aula;
+
+    }
+
+    public function guardarAula($nombre,$tipo_aula,$capacidad)
+    {
+        try {
+            $aula = new Aula();
+            $aula->nombre=$nombre;
+            $aula->tipo_aula=$tipo_aula;
+            $aula->capacidad=$capacidad;
+
+            $aula->save();
+            return ['success' => 'Aula guardada correctamente'];
+        } catch (Exception $e) {
+            return ['error' => 'Hubo un error al guardar el aula'];
+        }
+    }
+
+    public function actualizarAula($id,$nombre=null,$capacidad=null,$tipo_aula=null,)
+    {
+        $aula = Aula::find($id);
+        if (!$aula) {
+            return ['error' => 'hubo un error al buscar Aula'];
+        }
+
+        try {
+            // Actualizar los atributos del aula
+            if (!is_null($nombre)) {
+                $aula->nombre = $nombre;
+            }
+            if (!is_null($capacidad)) {
+                $aula->capacidad = $capacidad;
+            }
+            if (!is_null($tipo_aula)) {
+                $aula->tipo_aula = $tipo_aula;
+            }
+
+
+            $aula->save();
+            return ['success' => 'Aula actualizada correctamente'];
+        } catch (Exception $e) {
+            return ['error' => 'Hubo un error al actualizar el aula'];
+        }
+    }
+
+
+    public function eliminarAula($id)
+    {
+        $aula = Aula::find($id);
+        if (!$aula) {
+            return ['error' => 'hubo un error al buscar Aula'];
+        }
+
+        try {
+            $aula->delete();
+            return ['success' => 'Aula eliminada correctamente'];
+        } catch (Exception $e) {
+            return ['error' => 'Hubo un error al eliminar el aula'];
+        }
+
+    }
+
+
+
+    //----------------------------------------------------------------------------------------------------------
+    // Swagger
+    public function obtenerAulas(){
         try {
             $aulas = Aula::all();
             return response()->json($aulas, 200);
@@ -29,36 +110,21 @@ private $aulaMapper;
             return response()->json(['error' => 'Hubo un error al obtener las aulas'], 500);
         }
     }
-
-    public function obtenerTodosLaboratorios()
-    {
-        try {
-            $aulas = Aula::where('laboratorio', true)->get();
-            return response()->json($aulas, 200);
-        } catch (Exception $e) {
-            Log::error('Error al obtener los laboratorios: ' . $e->getMessage());
-            return response()->json(['error' => 'Hubo un error al obtener los laboratorios'], 500);
+    public function obtenerAulaPorId($id){
+        $aula = Aula::find($id);
+        if (!$aula) {
+            return response()->json(['error' => 'Aula no encontrada'], 404);
         }
-    }
-
-    public function obtenerAulaPorNro($nro)
-    {
-            $aula = Aula::find($nro);
-            if ($aula) {
-                return response()->json($aula, 200);
-            }
-            try {
-                return response()->json(['error' => 'No existe el aula'], 404);
-            } catch (Exception $e) {
-                Log::error('Error al obtener el aula: ' . $e->getMessage());
+        try {
+            return response()->json($aula, 200);
+        } catch (Exception $e) {
+            Log::error('Error al obtener el aula: ' . $e->getMessage());
             return response()->json(['error' => 'Hubo un error al obtener el aula'], 500);
         }
     }
-
-    public function guardarAula($aulaData)
-    {
+    public function guardarAulas($aula){
         try {
-            $aula = $this->aulaMapper->toAula($aulaData);
+            $aula = $this->aulaMapper->toAula($aula);
             $aula->save();
             return response()->json($aula, 201);
         } catch (Exception $e) {
@@ -66,12 +132,10 @@ private $aulaMapper;
             return response()->json(['error' => 'Hubo un error al guardar el aula'], 500);
         }
     }
-
-    public function actualizarAula($request, $nro)
-    {
-        $aula = Aula::find($nro);
+    public function actualizarAulas($request, $id){
+        $aula = Aula::find($id);
         if (!$aula) {
-            return response()->json(['error' => 'No existe el aula'], 404);
+            return response()->json(['error' => 'Aula no encontrada'], 404);
         }
         try {
             $aula->update($this->aulaMapper->toAulaData($request));
@@ -81,11 +145,9 @@ private $aulaMapper;
             return response()->json(['error' => 'Hubo un error al actualizar el aula'], 500);
         }
     }
-
-    public function eliminarAulaPorNro($nro)
-    {
+    public function eliminarAulas($id){
         try {
-            $aula = Aula::find($nro);
+            $aula = Aula::find($id);
             if ($aula) {
                 $aula->delete();
                 return response()->json(['success' => 'Se eliminó el aula'], 200);
@@ -98,3 +160,4 @@ private $aulaMapper;
         }
     }
 }
+
